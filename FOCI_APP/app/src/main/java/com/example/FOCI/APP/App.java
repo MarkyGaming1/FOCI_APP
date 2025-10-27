@@ -4,11 +4,47 @@
 package com.example.FOCI.APP;
 
 public class App {
+    
+    public static void main(String[] args) { // Kijavítva 'ars'-ról 'args'-ra
+        
+        System.out.println("Alkalmazás indítása...");
+        DatabaseManager.initializeDatabase();
+        System.out.println("Adatbázis készen áll.");
+        
+        // --- INNENTŐL ÚJ TARTALOM ---
+        
+        // 1. Hozzunk létre és mentsünk el két csapatot
+        // (Ha már léteznek, a saveTeam metódus kezeli a hibát)
+        Team realMadrid = new Team(1, "Real Madrid");
+        Team barcelona = new Team(2, "FC Barcelona");
+
+        TeamDAO.saveTeam(realMadrid);
+        TeamDAO.saveTeam(barcelona);
+
+        System.out.println("--- Csapatok mentése kész (vagy már léteztek) ---");
+
+        // 2. Hozzunk létre játékosokat a Real Madridhoz (teamId = 1)
+        // Player(String name, int jerseyNumber, String position, int teamId, int goals, int assists, int yellowCards, double marketValue_m_euro)
+        Player bellingham = new Player("Jude Bellingham", 5, "Középpályás", 1, 10, 5, 3, 180.0);
+        Player vinicius = new Player("Vinícius Jr.", 7, "Csatár", 1, 12, 8, 4, 150.0);
+
+        // 3. Hozzunk létre játékosokat a Barcelonahoz (teamId = 2)
+        Player gavi = new Player("Gavi", 6, "Középpályás", 2, 4, 6, 8, 90.0);
+        Player lewandowski = new Player("Robert Lewandowski", 9, "Csatár", 2, 15, 5, 2, 40.0);
+
+        // 4. Mentsük el a játékosokat az adatbázisba a PlayerDAO segítségével
+        PlayerDAO.savePlayer(bellingham);
+        PlayerDAO.savePlayer(vinicius);
+        PlayerDAO.savePlayer(gavi);
+        PlayerDAO.savePlayer(lewandowski);
+
+        System.out.println("--- Játékosok mentése kész ---");
+
+        System.out.println(new App().getGreeting());
+    }
+    
     public String getGreeting() {
         return "Hello World!";
     }
-
-    public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
-    }
 }
+
